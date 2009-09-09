@@ -1,0 +1,31 @@
+**Not fully tested yet**
+
+A simple plugin that makes storing duration as total seconds easier.  For situations where you need to store durations such as total time spent running the marathon etc.
+
+has_duration :column_name where column_name is the column you want to store the total number of seconds in
+
+Then in your table you need to define the following extra columns: column_name_hours, column_name_minutes, column_name_seconds
+
+Example:
+
+class Workout
+  has_duration :duration, :allow_nil => false
+end
+
+Then in your forms you can do what you would expect such as
+
+Duration: <%=f.text_field :duration_hours %> <%= f.text_field :duration_minutes %> <% f.text_field :duration_seconds %> (HH:MM:SS)
+
+Controller
+def create
+  @workout.new(params[:workout])
+  if @workout.save # calculates the total seconds based on the parameters and stores it in the duration column
+    ...
+  end
+end
+
+The plugin validates the numericality of each column. For minutes and seconds it also makes sure its less than 59
+
+TODO:
+- Pass on more validates_numericality_of options
+- Look into possibility of not needing the the extra columns
