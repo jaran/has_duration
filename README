@@ -34,7 +34,7 @@ View:
 Controller:
 
 def create
-  @workout.new(params[:workout])
+  @workout = Workout.new(params[:workout])
   if @workout.save # calculates the total seconds based on the parameters and stores it in the duration column
     ...
   end
