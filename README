@@ -8,15 +8,24 @@ Then in your table you need to define the following extra columns: column_name_h
 
 Example:
 
+Migration:
+
+create_table :workouts do |t|
+  t.column :duration, :integer #stores the total duration in seconds
+  t.column :duration_hours, :integer #stores the inputed hours
+  t.column :duration_minutes, :integer #stores the inputed minutes
+  t.column :duration_seconds, :integer #stores the inputed seconds
+end
+
 class Workout
   has_duration :duration, :allow_nil => false
 end
 
 Then in your forms you can do what you would expect such as
 
-Duration: <%=f.text_field :duration_hours %> <%= f.text_field :duration_minutes %> <% f.text_field :duration_seconds %> (HH:MM:SS)
+Duration: <%=f.text_field :duration_hours %> : <%= f.text_field :duration_minutes %> : <% f.text_field :duration_seconds %> (HH:MM:SS)
 
-Controller
+Controller:
 def create
   @workout.new(params[:workout])
   if @workout.save # calculates the total seconds based on the parameters and stores it in the duration column
