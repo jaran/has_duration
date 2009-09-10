@@ -17,15 +17,22 @@ create_table :workouts do |t|
   t.column :duration_seconds, :integer #stores the inputed seconds
 end
 
+Model:
+
 class Workout
   has_duration :duration, :allow_nil => false
 end
 
-Then in your forms you can do what you would expect such as
+View:
 
-Duration: <%=f.text_field :duration_hours %> : <%= f.text_field :duration_minutes %> : <% f.text_field :duration_seconds %> (HH:MM:SS)
+<% form_for(@workout) do |f| %>
+  Duration: <%=f.text_field :duration_hours %> : <%= f.text_field :duration_minutes %> : <% f.text_field :duration_seconds %> (HH:MM:SS)
+  <br/>
+  <%= f.submit %>
+<% end %>
 
 Controller:
+
 def create
   @workout.new(params[:workout])
   if @workout.save # calculates the total seconds based on the parameters and stores it in the duration column
